@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pocheese - Potato Cheese Bread</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Palet Pocheese */
+  --matcha:#BCC86F;      /* Matcha Powder */
+  --semolina:#F5CB99;    /* Semolina Pudding */
+  --milk:#FFABA9;        /* Strawberry Milk */
+  --rose:#F68578;        /* Tea Rose */
+  --pb:#B9794A;          /* Peanut Butter */
+  --choc:#79371D;        /* Milk Chocolate */
+  --bg:#FDF1E0;--card:#FFFBF5;--ink:#79371D;--muted:#8A5530;--line:#EBCFA8;--sel:#FBE3C4;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2B140A;--card:#3D1E10;--ink:#FDE9CF;--muted:#D9B48A;--line:#6A3A22;--sel:#4E2A18}}
+:root[data-theme="dark"]{--bg:#2B140A;--card:#3D1E10;--ink:#FDE9CF;--muted:#D9B48A;--line:#6A3A22;--sel:#4E2A18}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 Nunito,system-ui,sans-serif}
+h1,h2,h3{font-family:"Baloo 2",Nunito,sans-serif;margin:0;line-height:1.1}
+button{font:inherit;cursor:pointer;border:0;color:inherit}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--rose);outline-offset:2px}
+.view{display:none}.view.on{display:block}
+/* home */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:32px;max-width:1000px;margin:0 auto;padding:32px 24px}
+.hero h1{font-size:clamp(3rem,9vw,5.5rem);font-weight:800;color:var(--rose)}
+.hero p{font-size:1.15rem;color:var(--muted);max-width:32ch;margin:12px 0 28px}
+.big{background:var(--semolina);color:var(--choc);font-weight:800;font-size:1.1rem;padding:14px 32px;border-radius:999px;box-shadow:0 4px 0 var(--pb)}
+.big:active{transform:translateY(3px);box-shadow:0 1px 0 var(--pb)}
+.hero-img{width:100%;max-width:400px;justify-self:center;aspect-ratio:5/4;border-radius:28px;object-fit:cover;background:var(--sel);border:2px dashed var(--pb);display:grid;place-items:center;color:var(--muted);font-weight:700;animation:rise .9s ease-out both}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}}
+@media (prefers-reduced-motion:reduce){.hero-img{animation:none}}
+/* dashboard */
+.dash{display:grid;grid-template-columns:220px 1fr 380px;gap:20px;max-width:1400px;margin:0 auto;padding:28px 32px;align-items:start}
+.side{position:sticky;top:20px;display:flex;flex-direction:column;gap:10px;min-height:70vh}
+.side button{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:12px;font-weight:800;text-align:left}
+.side button.act{background:var(--semolina);border-color:var(--pb);color:var(--choc)}
+.side .back{margin-top:auto}
+.welcome{font-size:1.9rem;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px}
+.item{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:12px;position:relative}
+.item h3{font-size:1rem;margin:8px 0 2px}
+.thumb{width:100%;aspect-ratio:1/1;border-radius:14px;object-fit:cover;display:block}
+.ph{background:var(--sel);border:2px dashed var(--pb);color:var(--muted);font-size:.85rem;font-weight:700;display:grid;place-items:center;text-align:center;padding:8px}
+.price{font-weight:800;color:var(--pb)}
+.item .add{position:absolute;right:10px;bottom:10px;width:40px;height:40px;border-radius:50%;background:var(--matcha);color:var(--choc);font-size:1.6rem;font-weight:800;line-height:1;box-shadow:0 2px 0 var(--pb)}
+.item .add:active{transform:scale(.9)}
+.panel{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:18px;position:sticky;top:20px}
+.panel h2{font-size:1.3rem;margin-bottom:10px}
+.row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px dashed var(--line)}
+.row b{flex:1;font-size:.95rem}
+.q{width:32px;height:32px;border-radius:9px;font-weight:800;font-size:1.1rem;color:var(--choc)}
+.q.m{background:var(--rose)}.q.p{background:var(--matcha)}
+.empty{color:var(--muted);padding:10px 0}
+label{display:block;font-weight:800;margin:14px 0 4px;font-size:.92rem}
+input,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:12px;padding:10px}
+textarea{min-height:76px;resize:vertical}
+.err{color:var(--rose);font-weight:700;font-size:.85rem;min-height:1.2em;margin:4px 0 0}
+.total{background:var(--milk);color:var(--choc);border-radius:14px;padding:12px 14px;margin:14px 0;display:flex;justify-content:space-between;align-items:end}
+.total small{display:block}.total strong{font:800 1.6rem "Baloo 2",sans-serif}
+.wa{width:100%;background:var(--matcha);color:var(--choc);font-weight:800;padding:13px;border-radius:12px;margin-bottom:8px;box-shadow:0 3px 0 var(--pb)}
+.clr{width:100%;background:transparent;border:2px solid var(--rose);color:var(--ink);font-weight:800;padding:10px;border-radius:12px}
+/* rating */
+.rate{max-width:640px}
+.stars{display:flex;gap:4px;margin:8px 0}
+.stars button{background:none;font-size:2rem;line-height:1;color:var(--line);padding:2px}
+.stars button.on{color:var(--rose)}
+.rev{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:12px;margin-top:10px}
+.rev .s{color:var(--rose);letter-spacing:2px}
+.send{background:var(--semolina);color:var(--choc);font-weight:800;padding:10px 26px;border-radius:12px;margin-top:10px;box-shadow:0 3px 0 var(--pb)}
+@media (max-width:700px){
+.hero{grid-template-columns:1fr;text-align:center;min-height:auto;padding-top:40px}.hero p{margin-inline:auto}
+.dash{grid-template-columns:1fr;padding:14px}
+.side{position:static;flex-direction:row;min-height:0}.side button{flex:1;text-align:center}.side .back{margin-top:0}
+.panel{position:static}}
+</style>
+</head>
+<body>
+
+<section class="view on" id="home">
+  <div class="hero">
+    <div>
+      <h1>Pocheese</h1>
+      <p>Potato cheese bread hangat, isinya keju melimpah. Pesan langsung lewat WhatsApp.</p>
+      <button class="big" onclick="go('menu')">Lihat menu</button>
+    </div>
+    <div id="heroImg"></div>
+  </div>
+</section>
+
+<section class="view" id="menu">
+  <div class="dash">
+    <nav class="side" aria-label="Navigasi">
+      <button class="act" onclick="go('menu')">Menu Pocheese</button>
+      <button onclick="go('rating')">Rating</button>
+      <button class="back" onclick="go('home')">Kembali</button>
+    </nav>
+    <main>
+      <h2 class="welcome">Selamat datang, Cheesy!</h2>
+      <div class="grid" id="grid"></div>
+    </main>
+    <aside class="panel" aria-label="Ringkasan pesanan">
+      <h2>Ringkasan pesanan</h2>
+      <div id="lines"></div>
+      <label for="wa">Masukkan nomor WhatsApp Anda</label>
+      <input id="wa" type="tel" inputmode="tel" placeholder="08xxxxxxxxxx" autocomplete="tel">
+      <label for="note">Catatan (opsional)</label>
+      <textarea id="note" placeholder="Contoh: tidak perlu pakai saus pedas ya!"></textarea>
+      <div class="total"><div><small>Total item: <span id="tq">0</span></small>Total</div><strong id="tp">Rp0</strong></div>
+      <p class="err" id="err" role="alert"></p>
+      <button class="wa" onclick="checkout()">Checkout via WhatsApp</button>
+      <button class="clr" onclick="clearOrder()">Kosongkan pesanan</button>
+    </aside>
+  </div>
+</section>
+
+<section class="view" id="rating">
+  <div class="dash" style="grid-template-columns:190px 1fr">
+    <nav class="side" aria-label="Navigasi">
+      <button onclick="go('menu')">Menu Pocheese</button>
+      <button class="act">Rating</button>
+      <button class="back" onclick="go('home')">Kembali</button>
+    </nav>
+    <main class="rate">
+      <h2 class="welcome">Beri rating</h2>
+      <div class="stars" id="stars" role="radiogroup" aria-label="Pilih bintang"></div>
+      <label for="rtext">Beri tahu pengalaman Anda</label>
+      <textarea id="rtext" placeholder="Ceritakan rasa, tekstur, atau pelayanannya..."></textarea>
+      <p class="err" id="rerr" role="alert"></p>
+      <button class="send" onclick="sendRev()">Kirim</button>
+      <h2 style="margin-top:28px;font-size:1.3rem">Rating dari pelanggan lainnya</h2>
+      <div id="revs"></div>
+    </main>
+  </div>
+</section>
+
+<script>
+//no wa yg terhubung untuk pelanggannnn
+const WA_NUMBER = "6285882387772";
+
+
+const HERO_IMAGE = "images/logo.jpeg";
+
+// Daftar menu. Isi "img" dengan path/URL foto asli tiap menu,
+// contoh: img: "images/original.jpg". Kosong = tampil kotak "Foto menyusul".
+const MENU = [
+  {id:"ori", name:"Pocheese Original",   price:12000, img:"images/ori.jpeg"},
+  {id:"str", name:"Pocheese Strawberry", price:13000, img:"images/straw.jpeg"},
+  {id:"cok", name:"Pocheese Coklat",     price:13000, img:"images/coklat.jpeg"},
+  {id:"mat", name:"Pocheese Matcha",     price:13000, img:"images/matcha.jpeg"},
+  {id:"tir", name:"Pocheese Tiramisu",   price:13000, img:"images/tira.jpeg"}
+];
+// ====================================
+
+const rp = n => "Rp" + n.toLocaleString("id-ID");
+let cart = {};
+const $ = id => document.getElementById(id);
+
+function go(v){
+  document.querySelectorAll(".view").forEach(e => e.classList.toggle("on", e.id === v));
+  window.scrollTo(0,0);
+  if (v === "rating") renderRevs();
+}
+function photo(src, alt, cls){
+  return src
+    ? `<img class="${cls}" src="${src}" alt="${alt}" loading="lazy">`
+    : `<div class="${cls} ph">Foto menyusul</div>`;
+}
+function renderHero(){
+  $("heroImg").outerHTML = HERO_IMAGE
+    ? `<img id="heroImg" class="hero-img" src="${HERO_IMAGE}" alt="Potato cheese bread Pocheese">`
+    : `<div id="heroImg" class="hero-img">Foto menyusul</div>`;
+}
+function renderMenu(){
+  $("grid").innerHTML = MENU.map(m => `<div class="item">${photo(m.img, m.name, "thumb")}<h3>${m.name}</h3><div class="price">${rp(m.price)}</div><button class="add" onclick="add('${m.id}')" aria-label="Tambah ${m.name}">+</button></div>`).join("");
+}
+function add(id){ cart[id] = (cart[id]||0) + 1; renderCart(); }
+function chg(id,d){ cart[id] = (cart[id]||0) + d; if (cart[id] <= 0) delete cart[id]; renderCart(); }
+function totals(){
+  let q = 0, p = 0;
+  MENU.forEach(m => { const n = cart[m.id]||0; q += n; p += n*m.price; });
+  return {q,p};
+}
+function renderCart(){
+  const rows = MENU.filter(m => cart[m.id]).map(m => `<div class="row"><b>${m.name}</b><button class="q m" onclick="chg('${m.id}',-1)" aria-label="Kurangi">−</button><span>${cart[m.id]}</span><button class="q p" onclick="chg('${m.id}',1)" aria-label="Tambah">+</button></div>`);
+  $("lines").innerHTML = rows.join("") || '<p class="empty">Belum ada pesanan. Tekan + pada menu untuk menambah.</p>';
+  const t = totals();
+  $("tq").textContent = t.q; $("tp").textContent = rp(t.p);
+  $("err").textContent = "";
+}
+function clearOrder(){ cart = {}; $("note").value = ""; renderCart(); }
+function checkout(){
+  const t = totals(), wa = $("wa").value.trim();
+  if (!t.q){ $("err").textContent = "Pilih minimal satu menu dulu."; return; }
+  if (wa.replace(/\D/g,"").length < 9){ $("err").textContent = "Isi nomor WhatsApp Anda dengan benar."; return; }
+  const list = MENU.filter(m => cart[m.id]).map(m => `- ${m.name} x${cart[m.id]} (${rp(m.price*cart[m.id])})`).join("\n");
+  const note = $("note").value.trim();
+  const msg = `Hallo kak, saya pesan:\n${list}\n\nTotal: ${rp(t.p)}` + (note ? `\nCatatan: ${note}` : "") + `\nNo. WhatsApp saya: ${wa}`;
+  window.location.href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+}
+/* rating */
+let stars = 0, revs = [];
+try { revs = JSON.parse(localStorage.getItem("pocheese-revs") || "[]"); } catch(e){}
+function renderStars(){
+  $("stars").innerHTML = [1,2,3,4,5].map(i => `<button class="${i<=stars?'on':''}" role="radio" aria-checked="${i===stars}" aria-label="${i} bintang" onclick="stars=${i};renderStars()">★</button>`).join("");
+}
+function esc(s){ return s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function renderRevs(){
+  $("revs").innerHTML = revs.length ? revs.map(r => `<div class="rev"><div class="s">${"★".repeat(r.s)}${"☆".repeat(5-r.s)}</div>${esc(r.t)}</div>`).join("") : '<p class="empty">Belum ada ulasan. Jadi yang pertama memberi rating!</p>';
+}
+function sendRev(){
+  const t = $("rtext").value.trim();
+  if (!stars){ $("rerr").textContent = "Pilih jumlah bintang dulu."; return; }
+  if (!t){ $("rerr").textContent = "Tulis pengalaman Anda sebentar."; return; }
+  revs.unshift({s:stars, t});
+  try { localStorage.setItem("pocheese-revs", JSON.stringify(revs)); } catch(e){}
+  stars = 0; $("rtext").value = ""; $("rerr").textContent = ""; renderStars(); renderRevs();
+}
+renderHero(); renderMenu(); renderCart(); renderStars();
+</script>
+</body>
+</html>
